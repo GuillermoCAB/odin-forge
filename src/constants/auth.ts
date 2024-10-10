@@ -1,0 +1,3 @@
+export const LOCALSTORAGE_KEYS = {
+  AUTH: "AUTH_CONTEXT_ODING_FORGE",
+};

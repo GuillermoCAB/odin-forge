@@ -5,3 +5,5 @@ export { LogoutButton } from "./LogoutButton";
 export { Tabs } from "./Tabs";
 export { BottomNavBar } from "./BottomNavBar";
 export { BuyButton } from "./BuyButton";
+export { ConfirmLoginModule } from "./ConfirmLoginModule";
+export { SubscribeSection } from "./SubscribeSection";

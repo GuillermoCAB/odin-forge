@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Spinner from "../../../images/spinner.svg";
+import Spinner from "@/images/spinner.svg";
 
 interface InvisibleButtonProps {
   text: string;

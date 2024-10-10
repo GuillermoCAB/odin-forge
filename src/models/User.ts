@@ -9,7 +9,7 @@ interface IUser {
 }
 
 const userSchema = new mongoose.Schema<IUser>({
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   subscriptions: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Subscription" },
   ],

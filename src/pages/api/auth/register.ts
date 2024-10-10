@@ -2,52 +2,32 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import mongoose, { Error } from "mongoose";
 import { User } from "@/models";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI!);
+import { sendVerificationEmail } from "@/helpers";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
+    await mongoose.connect(
+      "mongodb+srv://UserTestOdysseyDB:UfvxAuz4SgPqtsPo@testodyssey.vwr5s.mongodb.net/?retryWrites=true&w=majority&appName=TestOdyssey"
+    );
     try {
       const { email } = req.body;
 
       if (!email) {
         return res.status(400).json({ message: "Email is required" });
       }
-      let isNewUser = false;
-      let user = await User.findOne({ email });
 
-      if (!user) {
-        isNewUser = true;
-        user = new User({ email });
-        await user.save();
-      }
+      const userExists = await User.findOne({ email });
+      const isNewUser = userExists ? false : true;
+      const user = userExists ?? (await new User({ email }).save());
 
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
+      const token = jwt.sign({ user }, process.env.JWT_SECRET!, {
         expiresIn: "1h",
       });
 
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USERNAME,
-          pass: process.env.EMAIL_PASSWORD,
-        },
-      });
-
-      const verificationUrl = `http://yourdomain.com/verify?token=${token}`;
-
-      // Enviar email
-      await transporter.sendMail({
-        from: process.env.EMAIL_USERNAME,
-        to: email,
-        subject: "Verify your email",
-        html: `Please click this link to confirm your email: <a href="${verificationUrl}">${verificationUrl}</a>`,
-      });
+      await sendVerificationEmail(email, token);
 
       res.status(201).json({
         message: isNewUser

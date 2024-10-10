@@ -15,6 +15,7 @@ interface ButtonProps {
   className?: string;
   isLoading?: boolean;
   round?: ButtonRound;
+  type?: "button" | "reset" | "submit" | undefined;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -25,6 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
   className = "",
   isLoading = false,
   round = "none",
+  type = "button",
 }) => {
   const baseClasses =
     "outline-none flex justify-center items-center w-full focus:outline-none";
@@ -55,7 +57,12 @@ export const Button: React.FC<ButtonProps> = ({
   const classes = `${baseClasses} ${variantClasses[variant]} ${roundClasses[round]} ${sizeClasses[size]} ${className}`;
 
   return (
-    <button onClick={onClick} className={classes} disabled={isLoading}>
+    <button
+      onClick={onClick}
+      className={classes}
+      disabled={isLoading}
+      type={type}
+    >
       {isLoading ? (
         <Image
           src={variant === "solid" ? SpinnerWhite : Spinner}

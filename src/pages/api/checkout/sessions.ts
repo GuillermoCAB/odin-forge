@@ -23,8 +23,8 @@ export default async function handler(
           },
         ],
         mode: "subscription",
-        success_url: `${req.headers.origin}/?success=true`,
-        cancel_url: `${req.headers.origin}/?canceled=true`,
+        success_url: `${req.headers.origin}/confirmPayment?success=true`,
+        cancel_url: `${req.headers.origin}/confirmPayment?canceled=true`,
       });
       res.status(200).json(session);
     } catch (err) {

@@ -1,4 +1,4 @@
-type ProductData = {
+export type ProductData = {
   name: string; // Name of the product
   description?: string; // Optional description of the product
   images?: string[]; // Optional array of image URLs
@@ -13,7 +13,7 @@ type ProductData = {
   url?: string; // URL associated with the product
 };
 
-type PriceData = {
+export type PriceData = {
   currency: "usd" | "gbp" | "brl" | string; // ISO currency code
   product?: string; // ID of the product
   product_data?: ProductData; // Inline product data
@@ -26,7 +26,7 @@ type PriceData = {
   unit_amount_decimal?: string; // Decimal amount in cents
 };
 
-type LineItem = {
+export type LineItem = {
   adjustable_quantity?: {
     // Define adjustable quantity related properties here
   };
@@ -37,6 +37,6 @@ type LineItem = {
   tax_rates?: string[]; // Array of tax rate IDs
 };
 
-type CheckoutSessionLineItems = {
+export type CheckoutSessionLineItems = {
   line_items: LineItem[];
 };

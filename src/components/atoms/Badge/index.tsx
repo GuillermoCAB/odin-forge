@@ -2,7 +2,7 @@ import React, { FunctionComponent, ReactNode } from "react";
 
 interface BadgeProps {
   text: string;
-  color: string;
+  color?: string;
   icon?: ReactNode;
   onClick?: () => void;
 }
